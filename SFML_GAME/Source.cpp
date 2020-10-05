@@ -18,7 +18,7 @@ int main()
 	////// Sprite
 	sf::Sprite shapeSprite;
 	shapeSprite.setTexture(playerTexture);
-	shapeSprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
+	shapeSprite.setTextureRect(sf::IntRect(0, 0, 30, 30));
 	int animationFrame = 0;
 	while (window.isOpen())
 	{
@@ -33,7 +33,7 @@ int main()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			shapeSprite.move(-.1f, 0.f);
-			shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 3, spriteSizeX, spriteSizeY));
+			shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
