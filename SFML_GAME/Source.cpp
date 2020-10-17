@@ -2,7 +2,7 @@
 #include <iostream>
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1960,1080), "Parallax Example",
+    sf::RenderWindow window(sf::VideoMode(1960,1080), "Candy Runner",
         sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
     ///พื้นหลัง
@@ -74,22 +74,22 @@ int main()
         ///รับค่าคีย์
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-            shapeSprite.move(.1f, 0.f);
+            shapeSprite.move(.2f, 0.f);
             shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 1, spriteSizeX, spriteSizeY));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            shapeSprite.move(-.1f, 0.f);
+            shapeSprite.move(-.2f, 0.f);
             shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 3, spriteSizeX, spriteSizeY));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            shapeSprite.move(0.f, -.1f);
+            shapeSprite.move(0.f, -.2f);
             shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, 0, spriteSizeX, spriteSizeY));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
-            shapeSprite.move(0.f, .1f);
+            shapeSprite.move(0.f, .2f);
             shapeSprite.setTextureRect(sf::IntRect(spriteSizeX, spriteSizeY * 2, spriteSizeX, spriteSizeY));
         }
 
@@ -99,11 +99,10 @@ int main()
         }
         animationFrame++;
 
-        if (animationFrame >= 2) {
+        if (animationFrame >= 3) {
             animationFrame = 0;
         }
         parallaxShader.setUniform("offset", offset += clock.restart().asSeconds() / 10);
-
         window.clear();
         window.draw(sprite,&parallaxShader);
         window.draw(shapeSprite);
