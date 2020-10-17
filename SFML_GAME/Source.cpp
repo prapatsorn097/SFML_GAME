@@ -24,8 +24,12 @@ int main()
 	int spriteSizeY = playerTexture.getSize().y / 4;
 
 	int animationFrame = 0;
-
 	shapeSprite.setTextureRect(sf::IntRect(0, 0, 50, 65));
+
+
+
+
+
 
 	while (window.isOpen())
 	{
@@ -39,7 +43,6 @@ int main()
 		window.draw(s);
 		window.draw(shapeSprite);
 		window.display();
-		
 
 		while (window.pollEvent(windowEvent))
 		{
