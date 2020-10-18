@@ -1,19 +1,19 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "Animation.h"
+
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1960,1080), "Candy Runner",
-        sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(1960, 1080), "Candy Runner",
+        sf::Style::Resize | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
-    ///พื้นหลัง
-    
-    sf::Texture texture;
-    if (!texture.loadFromFile("image/city.png"))
+
+    sf::Texture t;
+    if (!t.loadFromFile("image/city.png"))
         return EXIT_FAILURE;
-    texture.setRepeated(true);
-    sf::Sprite sprite(texture);
-    sprite.setPosition(0, 0);
-   
+    t.setRepeated(true);
+    sf::Sprite background(t);
+    background.setPosition(0, 0);
 
     sf::Shader parallaxShader;
     parallaxShader.loadFromMemory(
@@ -27,31 +27,20 @@ int main()
         "}"
         , sf::Shader::Vertex);
 
-    float offset = 0.f;
-
-    sf::Clock clock;
-
+    sf::RectangleShape player(sf::Vector2f(100, 118));
+    player.setPosition(30, 780);
     sf::Texture playerTexture;
-    if (!playerTexture.loadFromFile("image/02.png"))
-    {
-        std::cout<< "Load failed" << std::endl;
-    }
-    ////// Sprite
-    sf::Sprite shapeSprite;
-    shapeSprite.setTexture(playerTexture);
+    if (!playerTexture.loadFromFile("image/game-sprite01.png"))
+        return EXIT_FAILURE;
+    player.setTexture(&playerTexture);
 
-    int spriteSizeX = playerTexture.getSize().x / 3;
-    int spriteSizeY = playerTexture.getSize().y / 4;
+    Animation animation(&playerTexture, sf::Vector2u(10,6), 0.5f);
 
-    int animationFrame = 0;
-    shapeSprite.setTextureRect(sf::IntRect(0, 0, 50, 65));
+    float deltaTime = 0.0f;
+    sf::Clock clock2;
 
-
-
-
-
-
-
+    float offset = 0.f;
+    sf::Clock clock;
 
 
 
@@ -61,6 +50,7 @@ int main()
 
     while (window.isOpen())
     {
+        deltaTime = clock2.restart().asSeconds();
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -69,43 +59,28 @@ int main()
                 window.close();
                 break;
             }
-        }
 
-        ///รับค่าคีย์
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        {
-            shapeSprite.move(.2f, 0.f);
-            shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 1, spriteSizeX, spriteSizeY));
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        {
-            shapeSprite.move(-.2f, 0.f);
-            shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 3, spriteSizeX, spriteSizeY));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-        {
-            shapeSprite.move(0.f, -.2f);
-            shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, 0, spriteSizeX, spriteSizeY));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-        {
-            shapeSprite.move(0.f, .2f);
-            shapeSprite.setTextureRect(sf::IntRect(spriteSizeX, spriteSizeY * 2, spriteSizeX, spriteSizeY));
-        }
+        
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-        {
-            window.close();
-        }
-        animationFrame++;
 
-        if (animationFrame >= 3) {
-            animationFrame = 0;
-        }
-        parallaxShader.setUniform("offset", offset += clock.restart().asSeconds() / 10);
+
+
+
+
+
+
+
+
+
+        parallaxShader.setUniform("offset", offset += clock.restart().asSeconds() /20);
+
+        animation.Update(0, deltaTime,false);
+        player.setTextureRect(animation.uvRect);
+
         window.clear();
-        window.draw(sprite,&parallaxShader);
-        window.draw(shapeSprite);
+        window.draw(background, &parallaxShader);
+        window.draw(player);
         window.display();
     }
 
