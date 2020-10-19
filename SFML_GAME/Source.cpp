@@ -1,57 +1,34 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include"Animation.h"
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1960, 1080), "Candy Runner",
-        sf::Style::Titlebar | sf::Style::Close);
-    window.setVerticalSyncEnabled(true);
-    ///พื้นหลัง
+    sf::RenderWindow window(sf::VideoMode(1080, 960), "Candy Runner",
+        sf::Style::Resize | sf::Style::Close);
 
-    sf::Texture bg;
-    if (!bg.loadFromFile("image/city.png"))
-        return EXIT_FAILURE;
-    bg.setRepeated(true);
+    sf::RectangleShape player(sf::Vector2f(150.0f, 168.0f));///ขนาดตัวละคร
+    player.setPosition(50.0f, 50.0f);///ตำแหน่งตัวละคร
+  
 
-    sf::Sprite sprite(bg);
-    sprite.setPosition(0, 0);
-
-
-    sf::Shader parallaxShader;
-    parallaxShader.loadFromMemory(
-        "uniform float offset;"
-
-        "void main() {"
-        "    gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * gl_Vertex;"
-        "    gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;"
-        "    gl_TexCoord[0].x = gl_TexCoord[0].x + offset;" // magic
-        "    gl_FrontColor = gl_Color;"
-        "}"
-        , sf::Shader::Vertex);
-
-    float offset = 0.f;
-
-    sf::Clock clock;
-
+    //ตัวละคร
     sf::Texture playerTexture;
-    if (!playerTexture.loadFromFile("image/game-sprite01.png"))
-    {
-        std::cout << "Load failed" << std::endl;
-    }
-    ////// Sprite
-    sf::Sprite shapeSprite;
-    shapeSprite.setTexture(playerTexture);
-    int spriteSizeX = playerTexture.getSize().x / 10;
-    int spriteSizeY = playerTexture.getSize().y / 6;
+    playerTexture.loadFromFile("image/game-sprite01.png");
+    player.setTexture(&playerTexture);
+    sf::Vector2u textureSize = playerTexture.getSize();
+    textureSize.x /= 10;
+    textureSize.y /= 6;
 
-    sf::Vector2u spriteSize = playerTexture.getSize();
-    int animationFrame = 0;
-    shapeSprite.setTextureRect(sf::IntRect(0, 0, 100, 118));
-    shapeSprite.setPosition(20, 765);
+    player.setTextureRect(sf::IntRect(textureSize.x * 0, textureSize.y * 0, textureSize.x, textureSize.y));
+    Animation animation(&playerTexture, sf::Vector2u(10, 6), 0.8f);
+
+    float deltaTime = 0.0f;
+    sf::Clock clock;
 
 
 
     while (window.isOpen())
     {
+        deltaTime = clock.restart().asSeconds();
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -59,38 +36,53 @@ int main()
             case sf::Event::Closed:
                 window.close();
                 break;
+            case sf::Event::Resized:
+                std::cout << event.size.width << "New window height:" << event.size.height << std::endl;
+                printf("New winsow wigth : %i  New Window height : %i\n", event.size.width, event.size.height);
+                break;
+            case sf::Event::TextEntered:
+                if (event.text.unicode < 128) {
+
+
+                    printf("%c", event.text.unicode);
+
+
+                }
             }
+
         }
 
-        ///รับค่าคีย์
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+
+        //รับค่าผ่านคีย์บอร์ด
+        ///if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        ///{
+        ///    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+         ///   player.setPosition((float)mousePos.x, static_cast<float>(mousePos.y));
+       /// }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
         {
-            shapeSprite.move(1.f, 0.f);
-            shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 5, spriteSizeX, spriteSizeY));
+            player.move(-0.1f, 0.0f);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
         {
-            shapeSprite.move(0.f, 1.f);
-            shapeSprite.setTextureRect(sf::IntRect(spriteSizeX * animationFrame, spriteSizeY * 2, spriteSizeX, spriteSizeY));
+            player.move(0.1f, 0.0f);
         }
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
         {
-            window.close();
+            player.move(0.0f, -0.1f);
         }
-        animationFrame++;
-
-        if (animationFrame >= 6) {
-            animationFrame = 0;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+        {
+            player.move(0.0f, 0.1f);
         }
 
-        ///คำลั่งวาดแสดงผลผ่านหน้าจอ
-        parallaxShader.setUniform("offset", offset += clock.restart().asSeconds() / 10);
+        animation.Update(0,deltaTime);
+        player.setTextureRect(animation.uvRect);
+
         window.clear();
-        window.draw(sprite, &parallaxShader);
-        window.draw(shapeSprite);
+        window.draw(player);
         window.display();
     }
-
-    return EXIT_SUCCESS;
-}
+        return EXIT_SUCCESS;
+    }
