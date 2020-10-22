@@ -5,14 +5,15 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(1960, 1080), "Candy Runner",
         sf::Style::Titlebar | sf::Style::Close);
-    
-    sf::Texture t;
-    if (!t.loadFromFile("image/city.png"))
+
+    window.setVerticalSyncEnabled(true);
+    sf::Texture texture;
+    if (!texture.loadFromFile("image/city.png"))
         return EXIT_FAILURE;
-    t.setRepeated(true);
-    sf::Sprite background(t);
-    background.setPosition(0, 0);
-    background.setColor(sf::Color(255, 255, 255, 200));
+    texture.setRepeated(true);
+    sf::Sprite sprite(texture);
+    sprite.setPosition(0, 0);
+    sprite.setColor(sf::Color(255, 255, 255, 200));
 
     sf::Shader parallaxShader;
     parallaxShader.loadFromMemory(
@@ -25,9 +26,15 @@ int main()
         "    gl_FrontColor = gl_Color;"
         "}"
         , sf::Shader::Vertex);
-    float deltaTime2 = 0.0f;
+
+    float offset = 0.f;
+   
+
     sf::Clock clock2;
-    float offset = 0.0f;
+
+
+
+   
 
 
 
@@ -45,7 +52,7 @@ int main()
 
     while (window.isOpen())
     {
-        deltaTime2 = clock2.restart().asSeconds();
+      
         deltaTime = clock.restart().asSeconds();
         sf::Event event;
         while (window.pollEvent(event))
@@ -66,6 +73,7 @@ int main()
             }
 
         }
+        parallaxShader.setUniform("offset", offset += clock2.restart().asSeconds() / 10);
 
 
         //รับค่าผ่านคีย์บอร์ด
@@ -75,10 +83,9 @@ int main()
          ///   player.setPosition((float)mousePos.x, static_cast<float>(mousePos.y));
        /// }
 
-        parallaxShader.setUniform("offset", offset += clock2.restart().asSeconds() / 20);
-
+        window.clear();
         player.Update(deltaTime);
-        window.draw(background, &parallaxShader);
+        window.draw(sprite, &parallaxShader);
         player.Draw(window);
         window.display();
     }
