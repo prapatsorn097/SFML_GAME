@@ -2,6 +2,7 @@
 #include <iostream>
 #include"player.h"
 
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1960, 1080), "Candy Runner",
@@ -49,6 +50,13 @@ int main()
     
     sf::Clock clock;
  
+
+
+
+
+
+
+
 
     while (window.isOpen())
     {
