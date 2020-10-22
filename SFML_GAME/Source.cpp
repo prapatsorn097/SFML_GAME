@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include"player.h"
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1960, 1080), "Candy Runner",
@@ -35,7 +36,6 @@ int main()
 
 
    
-
 
 
     //ตัวละคร
@@ -83,10 +83,15 @@ int main()
          ///   player.setPosition((float)mousePos.x, static_cast<float>(mousePos.y));
        /// }
 
-        window.clear();
         player.Update(deltaTime);
+       
+
+
+
+        window.clear();
         window.draw(sprite, &parallaxShader);
         player.Draw(window);
+       
         window.display();
     }
         return EXIT_SUCCESS;

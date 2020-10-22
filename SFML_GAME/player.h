@@ -1,6 +1,7 @@
 #pragma once
 #include<SFML\Graphics.hpp>
 #include"Animation.h"
+
 class player
 {
 public:
@@ -9,7 +10,7 @@ public:
 
     void Update(float deltaTime);
     void Draw(sf::RenderWindow& window);
-
+  
 private:
     sf::RectangleShape body;
     Animation animation;
