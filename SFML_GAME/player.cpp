@@ -1,5 +1,5 @@
 #include "player.h"
-
+#include "Collider.h"
 
 player::player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime,float speed):
 animation(texture,imageCount,switchTime)
@@ -14,6 +14,7 @@ animation(texture,imageCount,switchTime)
 
 player::~player()
 {
+
 }
 
 void player::Update(float deltaTime)

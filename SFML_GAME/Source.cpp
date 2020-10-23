@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include"player.h"
+#include "Platform.h"
 
 
 int main()
@@ -30,13 +31,13 @@ int main()
         , sf::Shader::Vertex);
 
     float offset = 0.f;
-   
+
 
     sf::Clock clock2;
 
 
 
-   
+
 
 
     //ตัวละคร
@@ -45,11 +46,13 @@ int main()
     sf::Vector2u textureSize = playerTexture.getSize();
     textureSize.x /= 10;
     textureSize.y /= 6;
-    player player(&playerTexture, sf::Vector2u(10, 6), 0.1f,300.0);
+    player player(&playerTexture, sf::Vector2u(10, 6), 0.1f, 300.0);
+    Platform platform1(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f));
+    Platform platform2(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f));
     float deltaTime = 0.0f;
-    
+
     sf::Clock clock;
- 
+
 
 
 
@@ -60,7 +63,7 @@ int main()
 
     while (window.isOpen())
     {
-      
+
         deltaTime = clock.restart().asSeconds();
         sf::Event event;
         while (window.pollEvent(event))
@@ -69,7 +72,7 @@ int main()
             case sf::Event::Closed:
                 window.close();
                 break;
-            
+
             case sf::Event::TextEntered:
                 if (event.text.unicode < 128) {
 
@@ -92,15 +95,17 @@ int main()
        /// }
 
         player.Update(deltaTime);
-       
 
 
+        platform1.GetCollider().CheckCollision(player.GetsCollider(), 0.0f);
+        platform2.GetCollider().CheckCollision(player.GetsCollider(), 1.0f);
 
         window.clear();
         window.draw(sprite, &parallaxShader);
         player.Draw(window);
-       
+        platform1.Draw(window);
+        platform2.Draw(window);
         window.display();
     }
-        return EXIT_SUCCESS;
-    }
+    return EXIT_SUCCESS;
+}
