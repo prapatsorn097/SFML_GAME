@@ -46,8 +46,8 @@ int main()
     
     Player player(&playerTexture, sf::Vector2u(10, 6), 0.1f, 300.0);
 
-    Platform platform1(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(200.0f,800.0f));
-    Platform platform2(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(600.0f, 700.0f));
+    Platform platform1(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(300.0f,800.0f));
+    Platform platform2(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(800.0f, 700.0f));
     float deltaTime = 0.0f;
 
     sf::Clock clock;
