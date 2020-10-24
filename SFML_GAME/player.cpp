@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Collision.h"
 
-Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime,float speed){:
+Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime,float speed):
 animation(texture,imageCount,switchTime)
 {
 	this->speed = speed;
@@ -40,7 +40,7 @@ void Player::Update(float deltaTime)
 	
 
 	body.move(movement.x, movement.y);
-	animation.Update(row, deltaTime, faceRight);
+	animation.Update(row,deltaTime, faceRight);
 	body.setTextureRect(animation.uvRect);
 	
 }
