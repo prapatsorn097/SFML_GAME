@@ -43,10 +43,9 @@ int main()
     //ตัวละคร
     sf::Texture playerTexture;
     playerTexture.loadFromFile("image/game-sprite01.png");
-    sf::Vector2u textureSize = playerTexture.getSize();
-    textureSize.x /= 10;
-    textureSize.y /= 6;
+    
     player player(&playerTexture, sf::Vector2u(10, 6), 0.1f, 300.0);
+
     Platform platform1(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f));
     Platform platform2(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f));
     float deltaTime = 0.0f;
@@ -55,7 +54,7 @@ int main()
 
 
 
-
+    
 
 
 
@@ -95,11 +94,8 @@ int main()
        /// }
 
         player.Update(deltaTime);
-
-
-        platform1.GetCollider().CheckCollision(player.GetsCollider(), 0.0f);
-        platform2.GetCollider().CheckCollision(player.GetsCollider(), 1.0f);
-
+       
+     
         window.clear();
         window.draw(sprite, &parallaxShader);
         player.Draw(window);
