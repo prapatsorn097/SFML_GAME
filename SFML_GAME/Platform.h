@@ -1,6 +1,6 @@
 #pragma once
 #include<SFML\Graphics.hpp>
-#include"Collider.h"
+#include"Collision.h"
 class Platform
 {
 public:
@@ -8,7 +8,7 @@ public:
 	~Platform();
 
 	void Draw(sf::RenderWindow& window);
-	Collider GetCollider() { return Collider(body); }
+	Collision GetCollision() { return Collision(body); }
 
 
 private:

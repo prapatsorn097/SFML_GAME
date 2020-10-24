@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include"player.h"
+#include"Player.h"
 #include "Platform.h"
 
 
@@ -44,7 +44,7 @@ int main()
     sf::Texture playerTexture;
     playerTexture.loadFromFile("image/game-sprite01.png");
     
-    player player(&playerTexture, sf::Vector2u(10, 6), 0.1f, 300.0);
+    Player player(&playerTexture, sf::Vector2u(10, 6), 0.1f, 300.0);
 
     Platform platform1(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f));
     Platform platform2(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f));
@@ -95,7 +95,12 @@ int main()
 
         player.Update(deltaTime);
        
-     
+        Collision playerCollision = player.GetCollision();
+
+        platform1.GetCollision().CheckCollision(playerCollision, 0.0f);
+
+        platform2.GetCollision().CheckCollision(playerCollision, 1.0f);
+
         window.clear();
         window.draw(sprite, &parallaxShader);
         player.Draw(window);

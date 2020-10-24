@@ -1,7 +1,7 @@
-#include "player.h"
-#include "Collider.h"
+#include "Player.h"
+#include "Collision.h"
 
-player::player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime,float speed):
+Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime,float speed){:
 animation(texture,imageCount,switchTime)
 {
 	this->speed = speed;
@@ -12,12 +12,12 @@ animation(texture,imageCount,switchTime)
 	body.setTexture(texture);
 }
 
-player::~player()
+Player::~Player()
 {
 
 }
 
-void player::Update(float deltaTime)
+void Player::Update(float deltaTime)
 {
 	sf::Vector2f movement(0.0f, 0.0f);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) 
@@ -45,7 +45,7 @@ void player::Update(float deltaTime)
 	
 }
 
-void player::Draw(sf::RenderWindow& window)
+void Player::Draw(sf::RenderWindow& window)
 {
 	window.draw(body);
 }

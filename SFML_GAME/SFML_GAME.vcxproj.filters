@@ -24,10 +24,10 @@
     <ClCompile Include="player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
+    <ClCompile Include="Platform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Platform.cpp">
+    <ClCompile Include="Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,10 +38,10 @@
     <ClInclude Include="player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
+    <ClInclude Include="Platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Platform.h">
+    <ClInclude Include="Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
