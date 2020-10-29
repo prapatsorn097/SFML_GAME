@@ -46,8 +46,8 @@ int main()
     
     Player player(&playerTexture, sf::Vector2u(10, 6), 0.1f, 300.0);
 
-    Platform platform1(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(300.0f,800.0f));
-    Platform platform2(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(800.0f, 700.0f));
+    Platform platform1(nullptr, sf::Vector2f(200.0f, 200.0f), sf::Vector2f(1000.0f,800.0f));
+    Platform platform2(nullptr, sf::Vector2f(200.0f, 200.0f), sf::Vector2f(800.0f, 800.0f));
     float deltaTime = 0.0f;
 
     sf::Clock clock;
@@ -97,7 +97,7 @@ int main()
        
         Collision playerCollision = player.GetCollision();
 
-        platform1.GetCollision().CheckCollision(playerCollision, 0.0f);
+        platform1.GetCollision().CheckCollision(playerCollision, 1.0f);
         platform2.GetCollision().CheckCollision(playerCollision, 1.0f);
 
         window.clear();
