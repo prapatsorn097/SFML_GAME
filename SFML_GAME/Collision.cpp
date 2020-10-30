@@ -31,13 +31,17 @@ bool Collision::CheckCollision(Collision& other, float push)
         {
             if (deltaX > 0.0f)
             {
-                Move(intersectX * (1.0f - push), 0.0f);
+                Move(intersectX * (4.0f - push), 0.0f);
                 other.Move(-intersectX * push, 0.0f);
+             
+
+
             }
             else
             {
-                Move(-intersectX * (1.0f - push), 0.0f);
+                Move(-intersectX * (4.0f - push), 0.0f);
                 other.Move(intersectX * push, 0.0f);
+               
             }
         }
         else
@@ -46,11 +50,13 @@ bool Collision::CheckCollision(Collision& other, float push)
             {
                 Move(0.0f, intersectY * (1.0f - push));
                 other.Move(0.0f, -intersectY * push);
+               
             }
             else
             {
                 Move(0.0f, -intersectY * (1.0f - push));
                 other.Move(0.0f, intersectY * push);
+               
             }
         }
         return true;

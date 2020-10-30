@@ -18,6 +18,12 @@ int main()
     sprite.setPosition(0, 0);
     sprite.setColor(sf::Color(255, 255, 255, 200));
 
+
+
+
+
+    /// พื้นหลัง
+
     sf::Shader parallaxShader;
     parallaxShader.loadFromMemory(
         "uniform float offset;"
@@ -31,8 +37,6 @@ int main()
         , sf::Shader::Vertex);
 
     float offset = 0.f;
-
-
     sf::Clock clock2;
 
 
@@ -43,18 +47,17 @@ int main()
     //ตัวละคร
     sf::Texture playerTexture;
     playerTexture.loadFromFile("image/game-sprite01.png");
-    
-    Player player(&playerTexture, sf::Vector2u(10, 6), 0.1f, 300.0);
 
-    Platform platform1(nullptr, sf::Vector2f(200.0f, 200.0f), sf::Vector2f(1000.0f,800.0f));
-    Platform platform2(nullptr, sf::Vector2f(200.0f, 200.0f), sf::Vector2f(800.0f, 800.0f));
+    Player player(&playerTexture, sf::Vector2u(10, 6), 0.1f, 300.0f);
+
+
     float deltaTime = 0.0f;
 
     sf::Clock clock;
 
 
 
-    
+
 
 
 
@@ -86,25 +89,20 @@ int main()
         parallaxShader.setUniform("offset", offset += clock2.restart().asSeconds() / 10);
 
 
-        //รับค่าผ่านคีย์บอร์ด
-        ///if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        ///{
-        ///    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-         ///   player.setPosition((float)mousePos.x, static_cast<float>(mousePos.y));
-       /// }
+
+
 
         player.Update(deltaTime);
-       
-        Collision playerCollision = player.GetCollision();
 
-        platform1.GetCollision().CheckCollision(playerCollision, 1.0f);
-        platform2.GetCollision().CheckCollision(playerCollision, 1.0f);
+        
+
+
 
         window.clear();
         window.draw(sprite, &parallaxShader);
         player.Draw(window);
-        platform1.Draw(window);
-        platform2.Draw(window);
+
+
         window.display();
     }
     return EXIT_SUCCESS;

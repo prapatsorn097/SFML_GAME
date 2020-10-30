@@ -9,12 +9,10 @@ public:
 
     void Move(float dx, float dy) { body.move(dx, dy); }
 
-    bool CheckCollision(Collision& other, float push);
+    bool CheckCollision(Collision& other,float push);
     sf::Vector2f GetPoistion() { return body.getPosition(); }
-    sf::Vector2f GetHalfSize() { return body.getSize() / 1.0f; }
-
+    sf::Vector2f GetHalfSize() { return body.getSize() / 2.0f; }
 private:
     sf::RectangleShape& body;
-
 
 };
