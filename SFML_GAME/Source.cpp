@@ -19,7 +19,9 @@ int main()
     sprite.setColor(sf::Color(255, 255, 255, 200));
 
 
-
+    sf::Texture test;
+    if (!test.loadFromFile("image/1.png"))
+        return EXIT_FAILURE;
 
 
     /// พื้นหลัง
@@ -55,7 +57,8 @@ int main()
 
     sf::Clock clock;
 
-
+    Platform platfrom1(nullptr, sf::Vector2f(200.0f, 207.0f), sf::Vector2f(800.0f, 800.0f));
+    Platform platfrom2(nullptr, sf::Vector2f(200.0f, 207.0f), sf::Vector2f(800.0f, 1000.0f));
 
 
 
@@ -86,24 +89,26 @@ int main()
             }
 
         }
-        parallaxShader.setUniform("offset", offset += clock2.restart().asSeconds() / 10);
+        parallaxShader.setUniform("offset", offset += clock2.restart().asSeconds() / 20);
 
 
 
 
 
         player.Update(deltaTime);
-
+        Collision playerCollision = player.GetCollision();
         
 
-
+        platfrom1.GetCollision().CheckCollision(playerCollision, 0.0f);
+        platfrom2.GetCollision().CheckCollision(playerCollision, 1.0f);
 
         window.clear();
         window.draw(sprite, &parallaxShader);
         player.Draw(window);
-
-
+        platfrom1.Draw(window);
+        platfrom2.Draw(window);
         window.display();
+     
     }
     return EXIT_SUCCESS;
 }
