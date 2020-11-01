@@ -99,8 +99,8 @@ int main()
         Collision playerCollision = player.GetCollision();
         
 
-        platfrom1.GetCollision().CheckCollision(playerCollision, 0.0f);
-        platfrom2.GetCollision().CheckCollision(playerCollision, 1.0f);
+        platfrom1.GetCollision().CheckCollision(playerCollision, 4.0f);
+        platfrom2.GetCollision().CheckCollision(playerCollision, 4.0f);
 
         window.clear();
         window.draw(sprite, &parallaxShader);

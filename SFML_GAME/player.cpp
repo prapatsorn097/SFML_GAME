@@ -10,6 +10,8 @@ animation(texture,imageCount,switchTime)
 	body.setSize(sf::Vector2f(100.0f, 118.0f));
 	body.setPosition(20.0f,785.0f);
 	body.setTexture(texture);
+	
+	
 }
 
 Player::~Player()
