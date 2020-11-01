@@ -2,8 +2,8 @@
 #include <iostream>
 #include"Player.h"
 #include "Platform.h"
-
-
+#include "Menu.h"
+int page_number;
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1960, 1080), "Candy Runner",
@@ -22,8 +22,12 @@ int main()
     sf::Texture test;
     if (!test.loadFromFile("image/1.png"))
         return EXIT_FAILURE;
+    
+    /// หน้าเมนู
+    /// 
 
-
+    Menu menu(1960, 1080);
+    
     /// พื้นหลัง
 
     sf::Shader parallaxShader;
@@ -65,50 +69,106 @@ int main()
 
 
 
-
+    /// หน้าต่างเมนู
     while (window.isOpen())
     {
 
-        deltaTime = clock.restart().asSeconds();
-        sf::Event event;
-        while (window.pollEvent(event))
+
+        sf::Event evnt;
+        while (window.pollEvent(evnt))
         {
-            switch (event.type) {
+            switch (evnt.type)
+            {
+            case sf::Event::KeyReleased:
+                switch (evnt.key.code)
+                {
+                case sf::Keyboard::W:
+                    menu.moveUp();
+                    break;
+
+                case sf::Keyboard::S:
+                    menu.moveDown();
+                    break;
+
+                case sf::Keyboard::Enter:
+                    switch (menu.mainMenuPressed())
+                    {
+                    case 0:
+                        window.close();
+                        page_number = 1;
+                        break;
+                    case 1:
+                        window.close();
+                        page_number = 2;
+                        break;
+                    case 2:
+                        window.close();
+                        page_number = 3;
+                        break;
+                    }
+                }
+                break;
             case sf::Event::Closed:
                 window.close();
                 break;
-
-            case sf::Event::TextEntered:
-                if (event.text.unicode < 128) {
-
-
-                    printf("%c", event.text.unicode);
-
-
-                }
             }
-
         }
-        parallaxShader.setUniform("offset", offset += clock2.restart().asSeconds() / 20);
+
+        //set an arbitrary value as the offset, you'd calculate this based on camera position
 
 
-
-
-
-        player.Update(deltaTime);
-        Collision playerCollision = player.GetCollision();
-        
-
-        platfrom1.GetCollision().CheckCollision(playerCollision, 4.0f);
-        platfrom2.GetCollision().CheckCollision(playerCollision, 4.0f);
-
-        window.clear();
-        window.draw(sprite, &parallaxShader);
-        player.Draw(window);
-        platfrom1.Draw(window);
-        platfrom2.Draw(window);
+        menu.Draw(window);
         window.display();
+    }
+    if (page_number == 1)
+    {
+
+        //Play
+        sf::RenderWindow window_play(sf::VideoMode(1920, 1080), "Play!", sf::Style::Fullscreen);
+        while (window_play.isOpen())
+        {
+
+            deltaTime = clock2.restart().asSeconds();
+
+            sf::Event evnt;
+            while (window_play.pollEvent(evnt))
+            {
+                switch (evnt.type)
+                {
+                case sf::Event::KeyReleased:
+                    switch (evnt.key.code)
+                    {
+                    case sf::Keyboard::Escape:
+                        window_play.close();
+                        main();
+                        break;
+                    }
+                    break;
+                }
+
+            }
+            parallaxShader.setUniform("offset", offset += clock2.restart().asSeconds() / 20);
+
+
+
+
+
+            player.Update(deltaTime);
+            Collision playerCollision = player.GetCollision();
+
+
+            platfrom1.GetCollision().CheckCollision(playerCollision, 4.0f);
+            platfrom2.GetCollision().CheckCollision(playerCollision, 4.0f);
+            window_play.clear();
+            window_play.draw(sprite, &parallaxShader);
+            player.Draw(window_play);
+            platfrom1.Draw(window_play);
+            platfrom2.Draw(window_play);
      
+            window_play.display();
+            window_play.setFramerateLimit(60);
+          
+        }
     }
     return EXIT_SUCCESS;
 }
