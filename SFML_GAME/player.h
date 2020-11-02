@@ -22,5 +22,6 @@ private:
     unsigned int row;
     float speed;
     bool faceRight;
-   
+    const float gravity = 5;
+    int groundHeight = 900;
 };

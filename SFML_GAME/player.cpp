@@ -21,24 +21,36 @@ Player::~Player()
 
 void Player::Update(float deltaTime)
 {
-	sf::Vector2f movement(0.0f, 0.0f);
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		movement.x -= speed;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		movement.x += speed;
+    sf::Vector2f movement(0.0f, 0.0f);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        movement.y = -9 * speed * deltaTime;
+   
 
-	if (movement.x == 0.0f)
-	{
-		row = 5;
-	}
-	else
-	{
-		row = 5;
-		if (movement.x > 0.0f)
-			faceRight = true;
-		else
-			faceRight = false;
-	}
+    if (body.getPosition().y + body.getSize().y < groundHeight || movement.y < 0)
+    {
+
+        movement.y += gravity;
+    }
+    else {
+        body.setPosition(body.getPosition().x, groundHeight - body.getSize().y);
+        movement.y = 0;
+    }
+    body.move(movement.x, movement.y);
+
+    if (movement.y == 0.0f)
+    {
+        row = 5;
+    }
+    else if (movement.y < 0) {
+
+        row = 2;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        row = 4;
+    }
+	
+
 
 
 	body.move(movement * deltaTime);
