@@ -7,7 +7,7 @@ Menu::Menu(float width, float height)
 
     //Play
     mainMenu[0].setFont(font);
-    mainMenu[0].setFillColor(sf::Color::Blue);
+    mainMenu[0].setFillColor(sf::Color::Yellow);
     mainMenu[0].setString("PLAY");
     mainMenu[0].setCharacterSize(60);
     mainMenu[0].setPosition(940, 100);
@@ -56,7 +56,7 @@ void Menu::moveUp()
         {
             mainMenuSelected = 2;
         }
-        mainMenu[mainMenuSelected].setFillColor(sf::Color::Blue);
+        mainMenu[mainMenuSelected].setFillColor(sf::Color::Yellow);
     }
 }
 
@@ -72,6 +72,6 @@ void Menu::moveDown()
         {
             mainMenuSelected = 0;
         }
-        mainMenu[mainMenuSelected].setFillColor(sf::Color::Blue);
+        mainMenu[mainMenuSelected].setFillColor(sf::Color::Yellow);
     }
 }

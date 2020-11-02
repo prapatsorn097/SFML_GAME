@@ -3,6 +3,7 @@
 #include"Player.h"
 #include "Platform.h"
 #include "Menu.h"
+//#include <vector>
 int page_number;
 int main()
 {
@@ -11,7 +12,7 @@ int main()
 
     window.setVerticalSyncEnabled(true);
     sf::Texture texture;
-    if (!texture.loadFromFile("image/city.png"))
+    if (!texture.loadFromFile("image/bg1.png"))
         return EXIT_FAILURE;
     texture.setRepeated(true);
     sf::Sprite sprite(texture);
@@ -42,10 +43,11 @@ int main()
         "}"
         , sf::Shader::Vertex);
 
-  
-
-
-
+  //collision
+   /* std::vector<Platform> platforms;
+        platforms.push_back(Platform(nullptr, sf::Vector2f(200.0f, 200.0f), sf::Vector2f(200.0f, 200.0f)));
+        platforms.push_back(Platform(nullptr, sf::Vector2f(200.0f, 200.0f), sf::Vector2f(200.0f, 0.0f)));
+        platforms.push_back(Platform(nullptr, sf::Vector2f(200.0f, 200.0f), sf::Vector2f(200.0f, 200.0f)));*/
 
 
 
@@ -53,15 +55,14 @@ int main()
     sf::Texture playerTexture;
     playerTexture.loadFromFile("image/game-sprite01.png");
 
-    Player player(&playerTexture, sf::Vector2u(10, 6), 0.1f, 300.0f);
+    Player player(&playerTexture, sf::Vector2u(10, 6), 0.1f,200.0f);
 
 
     
 
     sf::Clock clock;
 
-    Platform platfrom1(nullptr, sf::Vector2f(200.0f, 207.0f), sf::Vector2f(800.0f, 800.0f));
-    Platform platfrom2(nullptr, sf::Vector2f(200.0f, 207.0f), sf::Vector2f(800.0f, 1000.0f));
+    
 
 
     float deltaTime = 0.0f;
@@ -155,14 +156,19 @@ int main()
             player.Update(deltaTime);
             Collision playerCollision = player.GetCollision();
 
+            sf::Vector2f direction;
 
-            platfrom1.GetCollision().CheckCollision(playerCollision, 4.0f);
-            platfrom2.GetCollision().CheckCollision(playerCollision, 4.0f);
+            /*for (Platform& platform : platforms)
+                if (platform.GetCollision().CheckCollision(playerCollision,direction, 1.0f))
+                    player.GetCollision(direction);*/
+            
+
             window_play.clear();
+            
             window_play.draw(sprite, &parallaxShader);
             player.Draw(window_play);
-            platfrom1.Draw(window_play);
-            platfrom2.Draw(window_play);
+           /* for (Platform& platform : platforms)
+                platform.Draw(window);*/
      
             window_play.display();
             window_play.setFramerateLimit(60);
