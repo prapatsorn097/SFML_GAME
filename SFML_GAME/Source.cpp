@@ -24,7 +24,7 @@ int main()
         return EXIT_FAILURE;
     
     /// หน้าเมนู
-    /// 
+     
 
     Menu menu(1960, 1080);
     
@@ -42,8 +42,7 @@ int main()
         "}"
         , sf::Shader::Vertex);
 
-    float offset = 0.f;
-    sf::Clock clock2;
+  
 
 
 
@@ -57,7 +56,7 @@ int main()
     Player player(&playerTexture, sf::Vector2u(10, 6), 0.1f, 300.0f);
 
 
-    float deltaTime = 0.0f;
+    
 
     sf::Clock clock;
 
@@ -65,9 +64,9 @@ int main()
     Platform platfrom2(nullptr, sf::Vector2f(200.0f, 207.0f), sf::Vector2f(800.0f, 1000.0f));
 
 
-
-
-
+    float deltaTime = 0.0f;
+    float offset = 0.f;
+    sf::Clock clock2;
 
     /// หน้าต่างเมนู
     while (window.isOpen())
@@ -124,11 +123,11 @@ int main()
     {
 
         //Play
-        sf::RenderWindow window_play(sf::VideoMode(1920, 1080), "Play!", sf::Style::Fullscreen);
+        sf::RenderWindow window_play(sf::VideoMode(1960, 1080), "Play!", sf::Style::Titlebar| sf::Style::Close);
         while (window_play.isOpen())
         {
 
-            deltaTime = clock2.restart().asSeconds();
+            deltaTime = clock.restart().asSeconds();
 
             sf::Event evnt;
             while (window_play.pollEvent(evnt))
@@ -147,7 +146,7 @@ int main()
                 }
 
             }
-            parallaxShader.setUniform("offset", offset += clock2.restart().asSeconds() / 20);
+            parallaxShader.setUniform("offset", offset += clock2.restart().asSeconds() /10);
 
 
 
